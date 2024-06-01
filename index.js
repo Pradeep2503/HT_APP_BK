@@ -6,6 +6,8 @@ const bodyParser=require( "body-parser" )
 const uri ="mongodb+srv://pradeepkumar:2tf9vIuo4RTuukr5@cluster0.hkkmaoi.mongodb.net/Handcricket_db";
 const port=3001;
 
+
+
 app.use(cors());
 app.use(express.json());
 
@@ -40,19 +42,13 @@ app.get('/', async (req, res) => {
     }
   });
 
+
+app.post('/GAMSAV',(req, res) => {
   
-app.post('/GAMSAV', async (req, res) => {
-  try {
-    const {winners,runs} = req.body;
-    const PPlayerModel = new PlayerModel({winners,runs});
-    await PPlayerModel.save()
-    res.status(201).json({ message: "Player Saved successfully" });
-    
-  } catch (error) {
-    console.error("Error saving Player:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+    PlayerModel.create(req.body)
+    .then((pl)=>res.json(pl))
+    .catch((ps)=>res.json(ps))
+  })
 
 
 
